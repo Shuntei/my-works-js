@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>密碼驗證</title>
+</head>
+<body>
+    <form>
+        <label>請輸入密碼: <input type="text"></label>
+        <button type="submit">送出</button>
+    </form>
+    <script>
+        let form = document.querySelector('form');
+        form.addEventListener('submit', () => {
+            event.preventDefault();
+            let inputPswd = document.querySelector('input').value;
+            let lowercase = /[a-z]/;
+            let uppercase = /[A-Z]/;
+            let num = /[0-9]/;
+            let mark = /[()\[\]{}<>+\-*/?,.:;"'_\|~`!@#$%^&=]/;
+            // 方括號內需要轉譯[]-這些符號
+            if(inputPswd.length >= 8 && 
+                lowercase.test(inputPswd) && uppercase.test(inputPswd) && mark.test(inputPswd)) {
+                    alert('成功');
+            }else {
+                alert('密碼須長度8以上且包含大小寫,數字,符號');
+            }
+        });
+    </script>
+</body>
+</html>

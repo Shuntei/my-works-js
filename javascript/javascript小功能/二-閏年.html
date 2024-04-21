@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>閏年判斷</title>
+</head>
+<body>
+    <form>
+        <label for="leapYearInput">請輸入西元年: </label>
+        <input type="number" id="learYearInput" min=1>
+        <button type="submit">送出</button>
+    </form>
+    <div>是否為閏年? <span></span></div>
+    <script>
+        let leapYear = document.querySelectorAll('form')[0];
+        leapYear.addEventListener('submit', () => {
+            event.preventDefault();
+            let leapYearInput = document.querySelector('#learYearInput').value;
+            let show = document.getElementsByTagName('span')[0];
+            if((leapYearInput % 400) == 0 ) {
+                show.innerHTML = '閏年';
+            }else if((leapYearInput % 4) == 0 && (leapYearInput % 100) != 0) {
+                show.innerHTML = '閏年';
+            }else if((leapYearInput % 4) != 0 ) {
+                show.innerHTML = '平年';
+            }else if((leapYearInput % 100) == 0 && (leapYearInput % 400) != 0 ) {
+                show.innerHTML = '平年';
+            }
+        })
+    </script>
+</body>
+</html>

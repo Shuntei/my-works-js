@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQueryHomePage</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        html, body{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        a{
+            text-decoration: none;
+        }
+        .div1{
+            margin: auto;
+            background-color: lemonchiffon;
+            width: 700px;
+            height: 700px;
+            display: flex;
+            border-radius: 50%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1{
+            margin: 50px;
+            font-size: 60px;
+        }
+        li{
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="div1" id="d1">
+        <h1 style="color: red;">jQueryHomework</h1>
+        <ul>
+            <li><span class="nav" onclick="changeTo1()"><a href="./starRating/stars.html">評點製作</a></span></li>
+            <li><span class="nav" onclick="changeTo1()"><a href="./adsCarousel/adsCarousel.html">廣告輪播</a></span></li>
+            <li><span class="nav" onclick="changeTo1()"><a href="./taiwanDistricts/taiwanDistricts.html">郵遞區號</a></span></li>
+        </ul>
+    </div>
+    
+    
+<script src="main.js"></script>
+<script src="99.js"></script>
+
+</body>
+</html>

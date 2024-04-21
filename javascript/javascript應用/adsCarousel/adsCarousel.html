@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>adsCarousel</title>
+    <script src="https://kit.fontawesome.com/b66e4a1ad8.js" crossorigin="anonymous"></script>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    body{
+        background-image: linear-gradient(90deg, navy, rgb(13, 236, 236));
+    }
+    fieldset {
+        width: 800px;  
+        height: 650px;
+        margin: auto;
+        background-color: aqua;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 20px;
+        background-color: black;
+    }
+    legend{
+        font-size: 50px;
+        font-weight: bold;
+        color: #fff;
+        margin-left: 100px;
+    }
+    .imgFrame{
+        height: 100%;
+        display: flex;
+        align-items: center;
+    } 
+    img{
+        width: 300px;
+    }
+
+    .btns{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding-bottom: 20px;
+    }    
+    button{
+        margin-top: 10px;
+        font-size: 30px;
+        padding: 0 32px;
+        cursor: pointer;
+    }
+    .numbers{
+        margin-top: 0;
+        display: flex;
+        background: darkcyan;
+        border-radius: 10px;
+        padding: 0 15px;
+    }
+    .numbersChild{
+        font-size: 30px;
+        padding: 5px;
+    }
+    .change{
+        background-color: yellow;
+    }
+    .autoPlay{
+        display: block;
+    }
+    .stopPlay{
+        display: none;
+    }
+    .numStyle{
+        background-color: yellow;
+        border-radius: 5px;
+        font-size: 50px;
+        overflow: hidden;
+    }
+</style>
+<body>    
+    <fieldset>
+        <legend>Top Sellers</legend>
+        <div class="imgFrame">
+            <div id="myImg" class="myImg"></div>
+        </div>
+        <div class="numbers">
+            <div class="numbersChild"><i class="fa-solid fa-1" id="numId"></i></div>
+            <div class="numbersChild"><i class="fa-solid fa-2" id="numId"></i></div>
+            <div class="numbersChild"><i class="fa-solid fa-3" id="numId"></i></div>
+            <div class="numbersChild"><i class="fa-solid fa-4" id="numId"></i></div>
+            <div class="numbersChild"><i class="fa-solid fa-5" id="numId"></i></div>
+            <div class="numbersChild"><i class="fa-solid fa-6" id="numId"></i></div>
+            <div class="numbersChild"><i class="fa-solid fa-7" id="numId"></i></div>
+            <div class="numbersChild"><i class="fa-solid fa-8" id="numId"></i></div>
+            <div class="numbersChild"><i class="fa-solid fa-9" id="numId"></i></div>
+        </div>
+        <div class="btns">
+            <button onclick="prevPic()"><i class="fa-solid fa-backward"></i></button>
+            <button class="autoPlay" onclick="clickAutoPlay()"><i class="fa-solid fa-play"></i></button>
+            <button class="stopPlay" onclick="clickStopPlay()"><i class="fa-solid fa-stop"></i></button>
+            <button onclick="nextPic()"><i class="fa-solid fa-forward"></i></button>
+        </div>
+    </fieldset>
+    <script>
+        const imgs = [
+            { img: '<a href="https://store.steampowered.com/?l=tchinese"><img src="./img/刺客教授.png" alt=""></a>' },
+            { img: '<a href="https://store.steampowered.com/?l=tchinese"><img src="./img/馬力歐爸.png" alt=""></a>' },
+            { img: '<a href="https://store.steampowered.com/?l=tchinese"><img src="./img/荒野機車.png" alt=""></a>' },
+            { img: '<a href="https://store.steampowered.com/?l=tchinese"><img src="./img/攻殼雞蛋隊.png" alt=""></a>' },
+            { img: '<a href="https://store.steampowered.com/?l=tchinese"><img src="./img/小紅帽.png" alt=""></a>'} ,
+            { img: '<a href="https://store.steampowered.com/?l=tchinese"><img src="./img/賽博龐克.png" alt=""></a>' },
+            { img: '<a href="https://store.steampowered.com/?l=tchinese"><img src="./img/狐狸們.png" alt=""></a>' },
+            { img: '<a href="https://store.steampowered.com/?l=tchinese"><img src="./img/路易雞村莊.png" alt=""></a>' },
+            { img: '<a href="https://store.steampowered.com/?l=tchinese"><img src="./img/女子拿槍.png" alt=""></a>' }
+        ]
+
+        let myImgDiv = document.getElementById("myImg");
+        myImgDiv.innerHTML = imgs[0].img;
+        let currentIndex = 0;
+
+        let myNum = document.querySelectorAll(".numbersChild"); 
+        myNum[0].classList.add("numStyle");
+        
+        const prevPic = () => {
+            if(currentIndex > 0) {
+                currentIndex --;
+            }else {
+                currentIndex = imgs.length - 1;
+            }
+            for(let i=0; i < myNum.length; i++) {
+                myNum[i].classList.remove("numStyle");
+            }             
+            myNum[currentIndex].classList.add("numStyle");; 
+            myImgDiv.innerHTML = imgs[currentIndex].img;
+        }
+        
+        const nextPic = () => {            
+            if(currentIndex < imgs.length - 1) {
+                currentIndex ++; 
+            }else {
+                currentIndex = 0;
+            }
+            for(let i=0; i < myNum.length; i++) {
+                myNum[i].classList.remove("numStyle");
+            }  
+            myNum[currentIndex].classList.add("numStyle");;
+            myImgDiv.innerHTML = imgs[currentIndex].img;
+        }
+
+        // 自動輪播
+
+        let autoPlay;
+        let stopPlay;
+
+        const clickAutoPlay = () => {
+            document.querySelector(".autoPlay").style.display="none"
+            document.querySelector(".stopPlay").style.display="block"
+            autoPlay = setInterval(nextPic, 1500);
+        }
+        const clickStopPlay = () => {
+            document.querySelector(".stopPlay").style.display="none"
+            document.querySelector(".autoPlay").style.display="block"
+            stopPlay = clearInterval(autoPlay);
+        }
+
+    </script>
+</body>
+</html>

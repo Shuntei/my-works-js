@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel</title>
+    <script src="https://kit.fontawesome.com/b66e4a1ad8.js" crossorigin="anonymous"></script>
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    html, body{
+        height: 100%;
+    }
+    body{
+        background-image: linear-gradient(90deg, navy, rgb(13, 236, 236));
+        display: flex;
+    }
+    .wrap{
+        height: 100%;
+        width: 600px;
+        border-radius: 20px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        margin: auto;
+        overflow: hidden;
+    }
+    h1{
+        font-size: 40px;
+        font-weight: bold;
+        color: #fff;
+        padding-top: 200px;
+        z-index: 1
+    }
+    .imgFrame{
+        position: absolute;
+        height: 100%;
+        width: 600px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    } 
+    img{
+        z-index: 1;
+    }
+    .btns{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .btns>button:first-child{
+        margin-right: 600px;
+        border-radius: 30px 0  0 30px;
+    }    
+    .btns>button:last-child{
+        border-radius: 0 30px 30px 0;
+    }  
+    button{
+        font-size: 30px;
+        padding: 0 5px;
+        width: 40px;
+        line-height: 375px;
+        cursor: pointer;
+        border: none;
+    }
+    .myDiv{
+        position: absolute;
+        bottom: 10px;
+        display: flex;
+        background-color: transparent;
+    }
+    .myDivChild{
+        height: 15px;
+        width: 40px;
+        margin: 200px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #fff;
+        z-index: 1;
+    }
+</style>
+<body>
+    <div class="wrap">
+        <div class="imgFrame">
+            <img src="./img/thumbbig-1338598.webp">
+            <img src="./img/thumbbig-1334785.webp">
+            <img src="./img/thumbbig-593270.webp">
+            <img src="./img/thumbbig-1332689.webp">
+        </div>
+        <div class="myDiv">
+            <div class="myDivChild"></div>
+            <div class="myDivChild"></div>
+            <div class="myDivChild"></div>
+            <div class="myDivChild"></div>
+        </div>
+    </div>    
+    <div class="btns">
+        <button class="prevPic"><i class="fa-solid fa-backward"></i></button>
+        <button class="nextPic"><i class="fa-solid fa-forward"></i></button>
+    </div> 
+    <script src="../jquery-3.7.1.min.js"></script>
+    <script>
+        $('.myDivChild').eq(0).css('background', 'orange');
+
+        let slideNum = 0;
+        let slideCount = $('.myDivChild').length;
+        let lastINdex = slideCount - 1;
+        $('.myDivChild').mouseenter((e) => {
+            slideNum = $(e.target).index();
+            show();
+        });       
+         
+         function show() {
+            $('.myDivChild').eq(slideNum).css('background', 'orange').siblings().css('background', '#fff');
+            slideMove = 0 - 600 * slideNum;
+            $('.imgFrame').css('left', slideMove);
+            console.log(slideNum)
+         }
+         
+         $('.prevPic').click(() => {
+            slideNum = --slideNum < 0 ?  lastINdex : slideNum;
+            show();
+         });
+         $('.nextPic').click(() => {
+            slideNum = ++slideNum > lastINdex ?  0 : slideNum;
+            show();
+         });
+         
+        function autoPlay() {
+            slideNum = ++slideNum > lastINdex ?  0 : slideNum;
+            show();
+        }
+
+        let play = setInterval(autoPlay, 1500);
+        $('img').on({
+            mouseenter: () => {
+                clearInterval(play);
+            },
+            mouseleave: () => {
+                play = setInterval(autoPlay, 1500);
+            }
+        });
+    </script>
+</body>
+</html>

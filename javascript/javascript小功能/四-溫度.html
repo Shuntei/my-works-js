@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>攝氏&華氏溫度</title>
+</head>
+<body>
+    <!-- f = c * 9 / 5 + 32 -->
+    <!-- c = (f - 32) * 5 / 9 -->
+    <form>
+        <label>攝氏: <input type="number" id="degreeC"></label> 度<br>
+        <label>華氏: <input type="number" id="degreeF"></label> 度<br><br>
+        <button type="submit">送出</button>
+    </form>
+    <div></div>
+    <script>
+        let form = document.getElementsByTagName('form')[0];
+        form.addEventListener('submit', () => {
+            event.preventDefault();
+            let inputDegreeC = document.querySelector('#degreeC').value;
+            let inputDegreeF = document.querySelector('#degreeF').value;
+
+            if(inputDegreeC && !inputDegreeF) {
+                inputDegreeF = inputDegreeC * 9 / 5 + 32;
+                document.querySelector('#degreeF').value = inputDegreeF;
+            }else if(inputDegreeF && !inputDegreeC) {
+                inputDegreeC = (inputDegreeF - 32) * 5 / 9
+                document.querySelector('#degreeC').value = inputDegreeC;
+            }else {
+                document.querySelector('div').innerHTML = '只能輸入其中一個~'
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>taiwanDistricts</title>   
+    <script src="./taiwan_districts.js"></script>
+</head>
+<style>
+    h1{
+        margin-left: 100px;
+    }
+    .formAll{
+        display: flex;
+        margin-left: 100px;
+    }
+    .selectOpt{
+        margin-left: 10px;
+
+    }
+    .table{
+        width: 50%;
+    }
+    table, td{
+        border: 2px solid navy;
+        border-collapse: collapse;
+    }
+</style>
+<body> 
+    <h1>台灣行政區郵遞區號</h1>
+    <div class="formAll">
+        <div id="attach"></div>
+        <div class="selectOpt">
+            <select name="city" id="city"></select>
+            <select name="zone" id="zone"></select>
+        </div>
+    </div>
+
+    <script>   
+        console.log(data[0].name); //顯示縣市
+        //dis與name平行
+        console.log(data[0].districts[0].zip); //顯示號碼
+        console.log(data[0].districts[0].name); //顯示區
+        console.log(data.length); //24 有24個縣市
+        
+        const attachTarget = document.getElementById("attach");
+        
+        let taiwanDis = "<table>";
+        for(let i = 0; i < data.length; i++) {
+            taiwanDis += "<tr><td rowspan=" + (data[i].districts.length + 1) + ">" + data[i].name;
+            for(let j = 0; j < data[i].districts.length; j++) {
+                taiwanDis += "<tr><td>" + data[i].districts[j].zip + "</td><td>" + data[i].districts[j].name + "</td></tr>"
+            }
+        }
+        taiwanDis += "</table>";
+        attachTarget.innerHTML = taiwanDis;
+
+        let citySelect = document.getElementById("city");             
+        let zoneSelect = document.getElementById("zone");
+
+        for(let i = 0; i < data.length; i++) {        
+            let cityOpt = document.createElement("option");
+            cityOpt.setAttribute("value", data[i].name)
+            let txt = document.createTextNode(data[i].name);
+            cityOpt.appendChild(txt);
+            citySelect.appendChild(cityOpt);   
+            
+            for(let j = 0; j < data[i].districts.length; j++) {
+                let zoneOpt = document.createElement("option");
+                zoneOpt.setAttribute("value", data[i].districts[j].zip)
+                let txt = document.createTextNode(data[i].districts[j].zip + data[i].districts[j].name);
+                zoneOpt.appendChild(txt);
+                zoneSelect.appendChild(zoneOpt);
+            }      
+        }
+        
+        function updateZone() {
+            let cityValPicked = citySelect.value;
+            zoneSelect.innerHTML = "";
+            
+            for(let i = 0; i < data.length; i++) {   
+                if(cityValPicked === data[i].name) {         
+                    for(let j = 0; j < data[i].districts.length; j++) {
+                        let zoneOpt = document.createElement("option");
+                        zoneOpt.setAttribute("value", data[i].districts[j].zip)
+                        let txt = document.createTextNode(data[i].districts[j].zip + data[i].districts[j].name);
+                        zoneOpt.appendChild(txt);
+                        zoneSelect.appendChild(zoneOpt);
+                    }
+                }   
+            }
+        }
+        updateZone();
+
+        citySelect.addEventListener('change', updateZone);
+    </script>   
+
+</body>
+</html>

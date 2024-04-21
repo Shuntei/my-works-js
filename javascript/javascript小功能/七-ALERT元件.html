@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alert元件</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .frame {
+            width: 350px;
+        }
+        .alert {
+            position: relative;
+        }
+        .close {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+        }
+        .alert-question{
+            background-color: rgb(237, 237, 237);
+            border: 2px solid rgb(140, 137, 137);
+            border-radius: 10px;
+            color: rgb(140, 137, 137);
+            font-weight: bold;
+            line-height: 100%;
+            padding-left: 20px;
+            line-height: 40px;
+            cursor: pointer;
+        }
+        .alert-success{
+            background-color: rgb(194, 248, 194);
+            border: 2px solid rgb(47, 168, 47);
+            border-radius: 10px;
+            color: rgb(47, 168, 47);
+            font-weight: bold;
+            padding-left: 20px;
+            line-height: 40px;
+            cursor: pointer;
+        }
+        .alert-error{
+            background-color: rgb(251, 186, 186);
+            border: 2px solid rgb(243, 78, 78);
+            border-radius: 10px;
+            color: rgb(243, 78, 78);
+            font-weight: bold;
+            padding-left: 20px;
+            line-height: 40px;
+            cursor: pointer;
+        }
+        .alert-warning{
+            background-color: rgb(254, 227, 165);
+            border: 2px solid rgb(253, 104, 63);
+            border-radius: 10px;
+            color: rgb(253, 104, 63);
+            font-weight: bold;
+            padding-left: 20px;
+            line-height: 40px;
+            cursor: pointer;
+        }
+        .showHereFrame {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 400px;
+        }
+        .showChange {
+            width: 400px;
+            height: 200px;
+            text-align: center;
+            line-height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <div class="alert alert-question">
+            <p>確認是否執行動作訊息。</p>
+            <!-- <button class="close"><i class="fa-solid fa-xmark"></i></button> -->
+        </div>
+        <hr>
+        <div class="alert alert-success">
+            <p>成功訊息。</p>
+            <!-- <button class="close"><i class="fa-solid fa-xmark"></i></button> -->
+        </div>
+        <hr>
+        <div class="alert alert-error">
+            <p>錯誤訊息。</p>
+            <!-- <button class="close"><i class="fa-solid fa-xmark"></i></button> -->
+        </div>
+        <hr>
+        <div class="alert alert-warning">
+            <p>警示訊息。</p>
+            <!-- <button class="close"><i class="fa-solid fa-xmark"></i></button> -->
+        </div>
+    </div>
+    <div class="showHereFrame"></div>
+    <script>
+        let alertContent = [
+            {alertType: 'question', alertText: '確認是否執行動作訊息。'},
+            {alertType: 'success', alertText: '成功訊息。'},
+            {alertType: 'error', alertText: '錯誤訊息。'},
+            {alertType: 'warning', alertText: '警示訊息。'},
+        ];
+
+        let showAlert = document.querySelectorAll('.alert');
+        let frame = document.querySelector('.frame');
+        showAlert.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                frame.style.display = 'none';
+                let showHereFrame = document.querySelector('.showHereFrame');
+                let showHere = document.createElement('div');
+                showHereFrame.appendChild(showHere);
+                showHere.innerHTML = `  
+                <div class="alert alert-${alertContent[index].alertType} showChange">
+                    <p>${alertContent[index].alertText}</p>
+                    <button class="close" onclick="closeBtn(${index})"><i class="fa-solid fa-xmark"></i></button>
+                </div>`;
+            });;
+        });
+        const closeBtn = () => {
+            let alertElement = document.querySelector(`.showChange`);
+            alertElement.remove(); 
+            frame.style.display = 'block';
+        };
+    </script>
+</body>
+</html>

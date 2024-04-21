@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calender</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        body{
+            background-color: burlywood;
+        }
+        .frameAll{
+            width: 900px; 
+            margin: auto;
+            margin-top: 30px;
+            border: 2px solid navy;
+            background-color: #fff;
+        }
+        .calenderFrame{
+            display: flex;
+            justify-content: center;
+            padding: 30px 30px 10px;
+            height: 300px;
+        }
+        .calenderContent{
+            width: 50%;
+        }
+        .info h1 {
+            padding-left: 5px;
+            background-color: aquamarine;
+        }
+        .info{
+            width: 50%;
+            border: 1px solid #000;
+        }
+        footer{
+            background-color: aquamarine;
+            height: 30px;
+            text-align: center;
+        }
+        .days{
+            display: flex;
+        }
+        li{
+            border: 1px solid black;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frameAll">
+        <main class="calenderFrame">
+            <section class="calenderContent">
+                <h1>Calender</h1>
+                <select name="" id="getY"></select><span> 年</span>
+                <select name="" id="getM"></select><span> 月</span>
+                <select name="" id="getD"></select><span> 日</span>
+            </section>        
+            <section class="info">
+                <h1>Information</h1>
+                <p>~選擇的日期會顯示於下方~</p>
+                <p class="comment"><span id="showTime"></span></p>
+            </section>
+        </main>    
+        <footer>
+            <p id="dateChosen">&copy;2023 All Rights Reserved.</p>
+        </footer>
+    </div>
+
+
+    <script>
+        let year = document.getElementById("getY");
+        let month = document.getElementById("getM");
+        let date = document.getElementById("getD");
+        let show = document.getElementById("showTime");
+        let showComment = document.querySelector(".comment");
+        
+        let theTime = new Date();
+        let y = theTime.getFullYear();
+        let m = theTime.getMonth();
+        let d = theTime.getDate();
+
+        for(let i = 2023; i >= 1912; i--) {      
+            let createdY = document.createElement("option");
+            createdY.setAttribute("value", i);
+            txtOfY = document.createTextNode(i);
+            createdY.appendChild(txtOfY)
+            year.appendChild(createdY);
+        }    
+
+        for(let i = 1; i <= 12; i++) {
+            let createdM = document.createElement("option");
+            createdM.setAttribute("value", i);
+            txtOfM = document.createTextNode(i);
+            createdM.appendChild(txtOfM);
+            month.appendChild(createdM);
+        }
+
+        // 添加一個函數使日期配合年月調整範圍
+        function updateDateOptions() {
+            let selectedYear = year.value; 
+            let selectedMonth = month.value
+            
+            // 月份的最後一天
+            let lastDate = new Date(selectedYear, selectedMonth, 0).getDate();
+
+            // 該月日期範圍
+            for (let i = 1; i <= lastDate; i++) {
+                let createdD = document.createElement("option");
+                let txtOfD = document.createTextNode(i);
+                createdD.appendChild(txtOfD);
+                date.appendChild(createdD);
+            }
+        }
+
+        // 初始化日期
+        updateDateOptions();
+        
+        year.addEventListener('change', updateDateOptions);
+        month.addEventListener('change', updateDateOptions);
+        date.addEventListener('change', updateDateOptions);
+
+        [year, month, date].map(select => {
+            select.addEventListener('focus', function () {
+                showComment.innerHTML = "日期選擇中...";
+            });
+        });
+        [year, month, date].map(select => {
+            select.addEventListener('change', function() {
+                showComment.innerHTML = `您選擇的日期是: ${year.value}年${month.value}月${date.value}日`;
+            });
+        })
+    </script>
+</body>
+</html>

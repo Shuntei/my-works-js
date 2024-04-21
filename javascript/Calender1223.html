@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calender</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        body{
+            background-color: antiquewhite;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        ul{
+            --dayW: calc((100%) / 7);
+            display: flex;
+            width: calc(100% - 10px);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+            & li{
+                width: var(--dayW);
+                border: 1px solid;
+                border-radius: 5px;
+            }
+        }
+        .btn{
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .attach{
+           display: flex;
+           justify-content: center;
+        }
+        .calender{
+            height: 300px;
+            --dayW: calc((100%) / 7);
+            display: flex;
+            width: calc(100% - 10px);
+            flex-wrap: wrap;
+            .item{
+                width: var(--dayW);
+                box-sizing: border-box;
+                height: 50px;
+                outline: 1px solid;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 5px;
+            }
+            .day1{
+                margin-left: var(--dayW);
+            }
+            .day2{
+                margin-left: calc(var(--dayW) * 2);
+            }
+            .day3{
+                margin-left: calc(var(--dayW) * 3);
+            }
+            .day4{
+                margin-left: calc(var(--dayW) * 4);
+            }
+            .day5{
+                margin-left: calc(var(--dayW) * 5);
+            }
+            .day6{
+                margin-left: calc(var(--dayW) * 6);
+            }
+            .day7{
+                margin-left: calc(var(--dayW) * 7);
+            }
+        }
+        .changeColor{
+            background-color: aqua;
+        }
+        @media (min-width: 576px) {
+            body{
+                min-height: 100svh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+            ul{
+                display: flex;
+                width: 380px;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+                & li{
+                    width: calc(380px / 7);
+                    border: 1px solid;
+                }
+            }
+            /* .btn同上手機版 */
+            .calender{
+                display: flex;
+                width: 380px;
+                flex-wrap: wrap;
+                .item{
+                    width: calc(380px / 7);
+                    height: 50px;
+                    outline: 1px solid;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .day1{
+                    margin-left: calc(380px / 7);
+                }
+                .day2{
+                    margin-left: calc(380px / 7 * 2);
+                }
+                .day3{
+                    margin-left: calc(380px / 7 * 3);
+                }
+                .day4{
+                    margin-left: calc(380px / 7 * 4);
+                }
+                .day5{
+                    margin-left: calc(380px / 7 * 5);
+                }
+                .day6{
+                    margin-left: calc(380px / 7 * 6);
+                }
+                .day7{
+                    margin-left: calc(380px / 7 * 7);
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="btn">
+        <div class="months">目前月份</div>
+        <button id="prevBtn">上個月</button>
+        <button id="nextBtn">下個月</button>    
+    </div>    
+    <ul>
+        <li>SUN</li>
+        <li>MON</li>
+        <li>TUE</li>
+        <li>WED</li>
+        <li>THU</li>
+        <li>FRI</li>
+        <li>SAT</li>
+    </ul>
+    <div class="attach">
+        <!-- <div class="item item1 day1">1</div> -->
+    </div>
+    <script>
+        var showCalender = {
+            attachCalender: document.querySelector(".attach"),
+            monthElement: document.querySelector(".months"),
+            prevBtn: document.getElementById("prevBtn"),
+            nextBtn: document.getElementById("nextBtn"),
+            letsRoll: new Date().getMonth(),
+            grabYear: new Date().getFullYear(),
+
+            init: function () {
+                this.prevBtn.addEventListener('click', this.prevMonth.bind(this));
+                this.nextBtn.addEventListener('click', this.nextMonth.bind(this));
+                this.updateCalendar();
+                this.displayMonth();
+            },
+
+            prevMonth: function () {
+                this.letsRoll--;
+                this.updateCalendar();
+                this.displayMonth();
+            },
+
+            nextMonth: function () {
+                this.letsRoll++;
+                this.updateCalendar();
+                this.displayMonth();
+            },
+
+            updateCalendar: function () {
+                this.attachCalender.innerHTML = "";
+
+                let divCalender = document.createElement("div");
+                divCalender.setAttribute("class", "calender");
+                let htmlContent = "";
+                
+                // 更新相關的日期相關變數
+                this.thisMonthFirstDate = new Date(
+                    this.grabYear,
+                    this.letsRoll,
+                    1
+                );
+
+                this.totalThisMonthDates = new Date(
+                    this.thisMonthFirstDate.getFullYear(),
+                    this.thisMonthFirstDate.getMonth() + 1,
+                    0
+                ).getDate();
+
+                this.lastMonthTotalDates = new Date(
+                    this.thisMonthFirstDate.getFullYear(),
+                    this.thisMonthFirstDate.getMonth(),
+                    0
+                );
+                this.lastMonthLastDate = this.lastMonthTotalDates.getDate();
+                this.lastMonthLastDay = this.lastMonthTotalDates.getDay();
+
+                this.nextMonth = new Date(
+                    this.thisMonthFirstDate.getFullYear(),
+                    this.thisMonthFirstDate.getMonth() + 1,
+                    1
+                );
+                this.nextMonthFirstDate = this.nextMonth.getDate();
+                this.nextMonthFirstDay = this.nextMonth.getDay();
+
+                for (let i = this.lastMonthLastDay + 1; i > 0; i--) {
+                    let n = this.lastMonthLastDate - i + 1;
+                    if (this.lastMonthLastDay === 6) {
+                        htmlContent = "";
+                    } else {
+                        htmlContent += `<div class="item item${i}">${n}</div>`;
+                    }
+                }
+
+                for (let i = 0; i < this.totalThisMonthDates; i++) {
+                    let n = i + 1;
+                    htmlContent += `<div class="item item${n}">${n}</div>`;
+                }
+
+                for (let i = 1; i <= 7 - this.nextMonthFirstDay; i++) {
+                    let n = this.nextMonthFirstDate + i - 1;
+                    let days = this.nextMonthFirstDay + i - 1;
+                    htmlContent += `<div class="item item${days}">${n}</div>`;
+                }
+
+                divCalender.innerHTML = htmlContent;
+                this.attachCalender.appendChild(divCalender);
+            },
+
+            displayMonth: function () {
+                var year = this.thisMonthFirstDate.getFullYear();
+                var month = this.thisMonthFirstDate.getMonth() + 1;
+                this.monthElement.innerHTML = `${year}年${month}月`;
+            }
+        };
+
+        // 初始化行事曆
+        showCalender.init();
+    </script>
+</body>
+</html>

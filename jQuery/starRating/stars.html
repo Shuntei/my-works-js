@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>５ Star Rating</title>
+    <style>
+        p{
+            font-size: 25px;
+        }
+        .amount{
+            font-size: 30px;
+        }
+        html,body{
+            height: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        img{
+            width: 100px;
+        }
+        .comment{
+            width: 800px;
+            margin: auto;
+            text-align: center;
+            margin-top: 100px;
+            border-radius: 20px;
+            border: 2px solid black;
+            border-radius: 50px;
+            padding: 50px 0px 200px;
+            background-color: antiquewhite;
+        }
+        
+    </style>
+</head>
+<body>    
+    <div class="comment">    
+        <div id="myImg" class="myImg">
+            <img src="star.gif">
+            <img src="star.gif">
+            <img src="star.gif">
+            <img src="star.gif">
+            <img src="star.gif">
+        </div>
+        <p>單擊星星可評分，雙擊星星重置。</p>
+        <div class="amount">
+            評分:<span id="showMsg">0</span>顆星
+        </div>
+    </div>
+    <script src="../jquery-3.7.1.min.js"></script>
+    <script>
+        
+        let clicked = false;
+        $.each($('img'), function(index, value) {
+            $(value).hover((e) => {
+                if(!clicked) {
+                    let targetIndex = $(e.target).index();
+                    $(`img:lt(${targetIndex + 1})`).attr('src', './chngstar.gif');
+                    $('#showMsg').text(index + 1);
+                }
+            }, (e) => {
+                if(!clicked){
+                    $('img').attr('src', './star.gif');
+                    $('#showMsg').text(0)
+                }
+            });
+        });
+
+        $('img').click(() => {
+            clicked = true;
+        }).dblclick(() => {
+            clicked = false
+        });
+    </script>
+</body>
+
+</html>

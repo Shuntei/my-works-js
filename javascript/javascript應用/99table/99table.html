@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <title>99table</title>    
+    <link rel="stylesheet" href="./99table.css">   
+</head>
+<body>
+    <script>    
+        const div = document.createElement('div');
+        const table = document.createElement('table');
+        const h1 = document.createElement('h1');
+        h1.innerHTML = `九九乘法表`
+
+        div.classList.add('content');
+        let go = `<table>`
+        for(let i=1; i<10; i++){  
+            go += `<tr>`;
+                for(let j=2; j<10; j++){
+                    go += `<td>${j} * ${i} = ${i*j}</td>`;
+                }
+            go += `</tr>`
+            }
+        go+= `</table>`;
+        table.innerHTML = go;
+
+        div.appendChild(h1); 
+        div.appendChild(table);
+        document.body.appendChild(div);
+    </script>
+
+</body>
+</html>

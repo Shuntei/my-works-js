@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI值換算</title>
+</head>
+<body>
+   <form name="formBMI">
+        <h3>BMI值換算</h3>
+        <label>身高<input type="number" name="tall" min="1" step="any"> (公分)</label><br>
+        <label>體重<input type="number" name="weight" min="1" step="any"> (公斤)</label><br><br>
+        <button type="submit">送出</button>
+    </form>
+    <div>
+        BMI值: <span name="showBMI"></span>
+        範圍: <span name="show"></span>
+    </div>
+    <script>
+        let formBMI = document.getElementsByName('formBMI')[0]
+        formBMI.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let weight = parseFloat(document.getElementsByName('weight')[0].value);
+            let tall = parseFloat(document.getElementsByName('tall')[0].value);
+            let BMI = weight / ((tall / 100) * (tall / 100));
+            let showBMI = document.getElementsByName('showBMI')[0];
+            showBMI.innerHTML = Math.round(BMI * 10) / 10;
+            let show = document.getElementsByName('show')[0];
+                // show.innerHTML = '';
+                console.log(BMI)
+                if(BMI < 18.5 ) {
+                    show.innerHTML = '過輕';
+                }else if(18.5 <= BMI && BMI < 24 ) {
+                    show.innerHTML = '正常';
+                }else if(24 <= BMI && BMI < 27 ) {
+                    show.innerHTML = '過重';
+                }else if(27 <= BMI && BMI < 30) {
+                    show.innerHTML = '輕度肥胖';
+                }else  if (30 <= BMI && BMI < 35) {
+                    show.innerHTML = '中度肥胖';
+                }else {
+                    show.innerHTML = '重度肥胖';
+                }
+        });
+        
+    </script>
+</body>
+</html>

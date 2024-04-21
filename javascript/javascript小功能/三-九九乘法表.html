@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九九乘法表</title>
+</head>
+<body>
+    <h3>九九乘法表</h3>
+    <table border = 1></table>
+    <script>
+        let table = document.getElementsByTagName('table')[0];
+        for(let i = 1; i <= 9; i++) {
+            let tr = document.createElement('tr');
+            for(let j = 1; j <= 9; j++) {
+                let td = document.createElement('td');
+                td.innerHTML += `${j} * ${i}`;
+                tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        } 
+    </script>
+</body>
+</html>

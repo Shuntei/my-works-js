@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAROUSEL元件</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .mainFrame {
+            display: flex;
+            align-items: center;
+        }
+        #carouselFrame {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 500px;
+            height: 500px; 
+            background-color: pink;
+        }
+        .carouselImg {
+            width: 100%;
+            cursor: pointer;
+        }
+        button {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            margin: auto 20px;
+            border: none;
+            cursor: pointer;
+            background-color: rgb(230, 230, 230);
+        }
+    </style>
+</head>
+<body>
+    <h4>點擊圖片啟動自動播放,再點一次停止~</h4>
+    <div style="display: flex;" class="mainFrame">
+        <button onclick="prev()">&lt;</button>
+        <div>
+            <div id="carouselFrame"></div>
+            <div id="text" style="text-align: center;"></div>
+        </div>
+        <button onclick="next()">&gt;</button>
+    </div>
+
+    <script>
+        const data = [
+            {"url":"https://www.kpopn.com/upload/fa639a8e1ae64ce8f2c0.jpg","name":"Twice Fancy Cover"},
+            {"url":"https://cdn1.wishnote.tw/200/2018/04/24/200_91441_1524554375.jpeg","name":"Twice What is Love MV"},
+            {"url":"https://img.ltn.com.tw/Upload/ent/page/800/2021/11/06/phpqJ2lIs.jpg","name":"Twice Formula of Love Cover"},
+            {"url":"https://static.popdaily.com.tw/u/202109/4b573e45-9586-41e7-bd5d-c391bbfb2a60.jpg","name":"Twice The Feels Cover"},
+            {"url":"https://thebiaslistcom.files.wordpress.com/2024/02/twice-i-got-you.jpeg","name":"Twice I Got You Cover"}
+        ];
+        console.log(data.length);
+        let carouselFrame = document.querySelector('#carouselFrame');
+        let carouselImg = document.createElement('img');      
+        carouselImg.setAttribute('class', 'carouselImg');
+        carouselFrame.appendChild(carouselImg);
+
+        let text = document.querySelector('#text');
+
+        let i = 0;
+        carouselImg.setAttribute('src', data[i].url);
+        text.innerHTML = data[i].name;
+
+        const prev = () => {
+            if(i > 0) {
+                i --;
+            }else {
+                i = data.length - 1;
+            }
+            carouselImg.setAttribute('src', data[i].url);
+            text.innerHTML = data[i].name;
+        }
+        
+        const next = () => {    
+            if(i < data.length - 1) {
+                i ++; 
+            }else {
+                i = 0;
+            }
+            carouselImg.setAttribute('src', data[i].url);
+            text.innerHTML = data[i].name;
+        }
+
+        let play = false;
+        carouselImg.addEventListener('click', () => {
+            play = !play;
+            if(play) {
+                start = setInterval(next, 1500);
+            }else {
+                clearInterval(start);
+            }
+        });
+        
+    </script>
+</body>
+</html>

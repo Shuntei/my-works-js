@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>記帳本</title>
+    <style>
+        table {
+            width: 600px;
+            margin-top: 30px; 
+            border: 2px solid #000;
+            border-collapse: collapse;
+        }
+        tr {
+            line-height: 60px;
+        }
+        td {
+            width: 150px;
+            text-align: center;
+        }
+        thead tr{
+            border-bottom: 2px solid #000;
+        }
+        tbody tr td {
+            border-bottom: 2px dashed #000;
+        } 
+    </style>
+</head>
+<body>
+    <form>
+        <label>日期: <input type="date" id="date"></label>
+        <label>項目: <input type="text" id="item"></label>
+        <label>金額: <input type="number" id="price"></label>
+        <button type="submit">新增</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>日期</th>
+                <th>項目</th>
+                <th>金額</th>
+                <th>刪除</th>
+            </tr>
+        </thead>
+        <tbody id="addItem"></tbody>
+    </table>
+    <script>
+        let addBtn = document.querySelector('button');
+        addBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            let date = document.querySelector('#date').value;
+            let item = document.querySelector('#item').value;
+            let price = document.querySelector('#price').value;
+            let addItem = document.querySelector('#addItem');
+            let items = `
+            <tr style="border-bottom: 2px dashed #000">
+                <td>${date}</td>
+                <td>${item}</td>
+                <td>$${price}元</td>
+                <td><button onclick="remove(this)">刪除</button></td>
+            </tr>
+            `
+            addItem.innerHTML += items;
+        });
+        const remove = (button) => {
+            let row = button.parentElement.parentElement; 
+            console.log(row);
+            row.remove();
+        }
+
+    </script>
+</body>
+</html>

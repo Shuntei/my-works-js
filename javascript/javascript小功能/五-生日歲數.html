@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日歲數</title>
+</head>
+<body>
+    <form>
+        <label><input type="date" placeholder="請輸入生日"></label>
+        <button type="submit">送出</button>
+    </form>
+    <div>年齡: <span></span></div>
+    <script>
+        let form = document.querySelector('form');
+        form.addEventListener('submit', () => {
+            event.preventDefault();
+            let today = new Date();
+            let birth = new Date(document.querySelector('input').value);
+            if((today - birth) > 0 ) {
+                let rst = today - birth;
+                let age = rst / 86400000 / 365; //除一天的毫秒數後再除一年天數
+                document.querySelector('span').innerHTML = Math.floor(age) + '歲';
+                console.log(today);
+                console.log(rst);
+                console.log(age)
+            }else {
+                document.querySelector('span').innerHTML = '日期不得大於今天';
+            }
+        });
+    </script>
+</body>
+</html>

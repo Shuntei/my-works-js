@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>taiwanDistricts</title>   
+    <script src="./taiwan_districts.js"></script>
+</head>
+<style>
+    h1{
+        margin-left: 100px;
+    }
+    .formAll{
+        display: flex;
+        margin-left: 100px;
+    }
+    .selectOpt{
+        margin-left: 10px;
+
+    }
+    .table{
+        width: 50%;
+    }
+    table, td{
+        border: 2px solid navy;
+        border-collapse: collapse;
+    }
+</style>
+<body> 
+    <h1>台灣行政區郵遞區號</h1>
+    <div class="formAll">
+        <div id="attach"></div>
+        <div class="selectOpt">
+            <select name="city" id="city"></select>
+            <select name="zone" id="zone"></select>
+        </div>
+    </div>
+    <script src="../jquery-3.7.1.min.js"></script>
+    <script>   
+        console.log(data[0].name); //顯示縣市
+        //dis與name平行
+        console.log(data[0].districts[0].zip); //顯示號碼
+        console.log(data[0].districts[0].name); //顯示區
+        console.log(data.length); //24 有24個縣市
+
+        let attachTarget = $('#attach')
+        
+        let taiwanDis = "<table>";
+        $.each(data, function(index, value) {
+            taiwanDis += "<tr><td rowspan=" + (value.districts.length + 1) + ">" + value.name;
+            $.each(value.districts, function(index2, value2) {
+                taiwanDis += "<tr><td>" + value2.zip + "</td><td>" + value2.name + "</td></tr>";
+            });
+        });
+        taiwanDis += "</table>";
+        attachTarget.html(taiwanDis);
+
+        let citySelect = $('#city');
+        let zoneSelect = $('#zone');
+
+        $.each(data, function(index, value) {
+            let cityOpt = $("<option>").attr("value", value.name).text(value.name);
+            citySelect.append(cityOpt);
+
+            $.each(value.districts, function(index2, value2) {
+                let zoneOpt = $("<option>").attr("value", value2).text(value2.zip + value2.name);
+                zoneSelect.append(zoneOpt);
+            });
+        });
+
+        function updateZone() {
+            let cityValPicked = citySelect.val();
+            zoneSelect.html('');
+
+            $.each(data, function(index, value) {   
+                if(cityValPicked === value.name) {         
+                    $.each(value.districts, function(index2, value2) {
+                    let zoneOpt = $("<option>").attr("value", value2).text(value2.zip + value2.name);
+                    zoneSelect.append(zoneOpt);
+                    });
+                }   
+            });
+        }
+        updateZone();
+        citySelect.on('change', updateZone);
+    </script>   
+</body>
+</html>

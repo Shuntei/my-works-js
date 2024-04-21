@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>合作社</title>
+ <style>
+  body {
+   font-family: Arial, sans-serif;
+   padding: 20px;
+  }
+  h1 {
+   text-align: center;
+   font-size: 36px;
+   margin-bottom: 30px;
+  }
+  .container {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   align-items: center;
+   max-width: 800px;
+   margin: 0 auto;
+  }
+  .item {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 200px;
+   margin: 20px;
+   padding: 20px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  .item img {
+   max-width: 100%;
+   margin-bottom: 10px;
+  }
+  .item button {
+   background-color: #4CAF50;
+   color: white;
+   padding: 10px 20px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.2s;
+   margin-top: 10px;
+  }
+  .item button:hover {
+   background-color: #3E8E41;
+  }
+  form {
+   display: flex;
+   flex-direction: column;
+   max-width: 400px;
+   margin: 0 auto;
+   margin-top: 30px;
+   padding: 20px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  label {
+   font-size: 18px;
+   margin-bottom: 10px;
+  }
+  input[type="text"], input[type="password"] {
+   padding: 10px;
+   border-radius: 5px;
+   border: 1px solid #ccc;
+   margin-bottom: 10px;
+   font-size: 16px;
+  }
+  input[type="submit"] {
+   background-color: #4CAF50;
+   color: white;
+   padding: 10px 20px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.2s;
+   margin-top: 10px;
+  }
+  input[type="submit"]:hover {
+   background-color: #3E8E41;
+  }
+ </style>
+</head>
+<body>
+ <h1>俊哥合作社</h1>
+ <div class="container">
+
+<div class="item">
+  <img src="https://via.placeholder.com/200x200" alt="Product 1">
+  <h2>Product 1</h2>
+  <p>$10.00</p>
+  <label for="quantity1">Quantity:</label>
+  <input type="number" id="quantity1" name="quantity1" value="1" min="1" max="10" onchange="updateTotal()">
+  <p>Total: $<span id="total1">10.00</span></p>
+  <button onclick="addToCart(10)">Add to Cart</button>
+</div>
+
+  <div class="item">
+   <img src="https://via.placeholder.com/200x200" alt="Product 2">
+   <h2>Product 2</h2>
+   <p>$15.00</p>
+     <label for="quantity2">Quantity:</label>
+  <input type="number" id="quantity2" name="quantity2" value="1" min="1" max="10" onchange="updateTotal()">
+  <p>Total: $<span id="total2">15.00</span></p>
+   <button onclick="addToCart2(15)">Add to Cart</button>
+  </div>
+  
+  <div class="item">
+   <img src="https://via.placeholder.com/200x200" alt="Product 3">
+   <h2>Product 3</h2>
+   <p>$20.00</p>
+       <label for="quantity3">Quantity:</label>
+  <input type="number" id="quantity3" name="quantity3" value="1" min="1" max="10" onchange="updateTotal()">
+  <p>Total: $<span id="total3">20.00</span></p>
+   <button onclick="addToCart3(20)">Add to Cart</button>
+  </div>
+  
+ <div id="cart">
+  <p>Cart: 0 items, Total: $0.00</p>
+</div>
+  
+ </div>
+ <div>
+  <form>
+   <label for="username">Username:</label>
+   <input type="text" id="username" name="username">
+   <label for="password">Password:</label>
+   <input type="password" id="password" name="password">
+   <input type="submit" value="Login" onclick="login()">
+  </form>
+ </div>
+ <div>
+  <form>
+   <label for="amount" style="text-align:center">Amount:</label>
+   <div style="border:solid green 2px; height:60px; border-radius:5px" id="amount">
+   </div>
+   <br>
+   <label style="text-align:center">Total:<span id="finalPrice"></span></label>
+   <br>
+   <input type="button" value="Checkout" onclick="checkout()">
+  </form>
+ </div>
+ <script>
+    
+   function updateTotal() {
+  let quantity1 = document.getElementById("quantity1").value;
+  let total1 = quantity1 * 10;
+  document.getElementById("total1").innerHTML = total1.toFixed(2);
+  
+  let quantity2 = document.getElementById("quantity2").value;
+  let total2 = quantity2 * 15;
+  document.getElementById("total2").innerHTML = total2.toFixed(2);
+  
+  let quantity3 = document.getElementById("quantity3").value;
+  let total3 = quantity3 * 20;
+  document.getElementById("total3").innerHTML = total3.toFixed(2);
+}
+
+  let cart1 = 0;
+  let cart2 = 0;
+  let cart3 = 0;
+  
+  let count1 = 0;
+  let count2 = 0;
+  let count3 = 0;
+  
+  function addToCart() {
+  let quantity1 = document.getElementById("quantity1").value;
+  let items = quantity1;
+   count1 += Number(items); // or items * 1 也行
+  let total1 = quantity1 * 10;
+   cart1 += total1;
+   updateCart();
+   alert("Item added to cart. Total: $" + cart1.toFixed(2));
+   amount();
+  }
+  
+    function addToCart2() {
+  let quantity2 = document.getElementById("quantity2").value;
+  let items = quantity2;
+   count2 += Number(items); // or items * 1 也行
+  let total2 = quantity2 * 15;
+   cart2 += total2;
+   updateCart();
+   alert("Item added to cart. Total: $" + cart2.toFixed(2));
+   amount();
+  }
+  
+    function addToCart3() {
+  let quantity3 = document.getElementById("quantity3").value;
+  let items = quantity3;
+   count3 += Number(items); // or items * 1 也行
+  let total3 = quantity3 * 20;
+   cart3 += total3;
+   updateCart();
+   alert("Item added to cart. Total: $" + cart3.toFixed(2));
+   amount();
+  }
+  
+        
+function updateCart() {
+  let cartElement = document.getElementById("cart");
+  cartElement.innerHTML = "Cart: " + (count1 + count2 + count3) + " items, Total: $" + (cart1 + cart2 + cart3).toFixed(2);
+  amount();
+}
+  function login() {
+   alert("Login successful!");
+  }
+  
+function amount() {
+ document.getElementById("amount").innerHTML = 
+ "Product 1: " + "$10.00" + " x " + count1 + " = " + "$" + cart1 + "<br>" +
+ "Product 2: " + "$15.00" + " x " + count2 + " = " + "$" + cart2 + "<br>" +
+ "Product 3: " + "$20.00" + " x " + count3 + " = " + "$" + cart3;
+ document.getElementById("finalPrice").innerHTML = " $" + Number(cart1 + cart2 + cart3);
+}
+  
+ </script>
+</body>
+</html>
